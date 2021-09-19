@@ -14,8 +14,10 @@ public class AnalyticsCounter {
 
 		try {
 			File file = new File("symptoms.txt");
+
 			try (Scanner scan = new Scanner(file)) {
 				Map<String, Integer> wordCount = new TreeMap<>();
+
 				while (scan.hasNext()) {
 					String word = scan.nextLine();
 					if (wordCount.containsKey(word)) {
@@ -29,10 +31,15 @@ public class AnalyticsCounter {
 
 				// Result in console & Write file output
 				FileWriter writer = new FileWriter("results.out");
+
 				try (BufferedWriter out = new BufferedWriter(writer)) {
+
 					for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+
 						System.out.println(entry.getKey() + " : " + entry.getValue());
+
 						out.write(entry.getKey() + " = " + entry.getValue() + " \n");
+
 						out.flush(); // Force write
 					}
 				}
