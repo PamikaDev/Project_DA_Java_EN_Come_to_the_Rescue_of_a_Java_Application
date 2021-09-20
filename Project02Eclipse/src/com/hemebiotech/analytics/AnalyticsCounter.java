@@ -1,53 +1,76 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
-public class AnalyticsCounter {
+public class AnalyticsCounter extends ReadSymptomDataFromFile {
 
-	public static void main(String[] args) {
+	private static Entry<String, Integer> analycount;
 
-		try {
-			File file = new File("symptoms.txt");
+	public AnalyticsCounter(String filepath) throws IOException {
+		super();
+		this.getFilepath();
+	}
 
-			try (Scanner scan = new Scanner(file)) {
-				Map<String, Integer> wordCount = new TreeMap<>();
+	public static void main(String[] args) throws IOException {
 
-				while (scan.hasNext()) {
-					String word = scan.nextLine();
-					if (wordCount.containsKey(word)) {
+		List<String> filepath = Files.readAllLines(Paths.get("symptoms.txt"));
 
-						wordCount.put(word, wordCount.get(word) + 1);
+		Map<String, Integer> readsymtfromfile = new TreeMap<>();
 
-					} else {
-						wordCount.put(word, 1);
-					}
-				}
+		// Initialize the frequency table from the command line
+		for (String a : filepath) {
+			Integer AnalyticsCounter = readsymtfromfile.get(a);
 
-				// Result in console & Write file output
-				FileWriter writer = new FileWriter("results.out");
-
-				try (BufferedWriter out = new BufferedWriter(writer)) {
-
-					for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
-
-						System.out.println(entry.getKey() + " : " + entry.getValue());
-
-						out.write(entry.getKey() + " = " + entry.getValue() + " \n");
-
-						out.flush(); // Force write
-					}
-				}
-			}
-
-		} catch (IOException e) {
-			System.out.println("Fichier introuvable");
+			/**
+			 * 
+			 * This argument is a conditional expression that has the effect of 
+			 * setting the
+			 * frequency to one if the word has never been seen before or to one 
+			 * more than
+			 * its current value if the word has already been seen.
+			 * 
+			 */
+			readsymtfromfile.put(a, (AnalyticsCounter == null) ? 1 : AnalyticsCounter + 1);
 		}
 
+		System.out.println("We have " + readsymtfromfile.size() + " distinct symptoms listed as well :"+ " \n");
+
+		// Order the list, line by line on the console by comparing the keys
+		readsymtfromfile.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByKey())
+		.forEachOrdered(System.out::println);
+		
+		
+	
+//		ReadSymptomDataFromFile();{
+//			new ReadSymptomDataFromFile();
+//		//	System.out.println(analycount.getKey() + ": " + analycount.getValue());
+//		}
+		
 	}
+
+	@Override
+	public Map<String, Integer> Symptoms() throws IOException {
+		return Symptoms();
+	}
+
+	// A SortedMap is a Map that maintains its entries in ascending order,
+	// sorted according to the keys' natural ordering, or according to a
+	// Comparator provided at the time of the SortedMap creation
+
+	// keySet — the Set of keys contained in the Map.
+
+	// values — The Collection of values contained in the Map.
+	// This Collection is not a Set, because multiple keys can map to the
+	// same value.
+
+	// entrySet — the Set of key-value pairs contained in the Map.
+	// The Map interface provides a small nested interface called Map.Entry,
+	// the type of the elements in this Set.
+
 }
