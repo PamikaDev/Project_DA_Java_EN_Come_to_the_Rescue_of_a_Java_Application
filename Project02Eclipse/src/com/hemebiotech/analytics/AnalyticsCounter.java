@@ -7,41 +7,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class AnalyticsCounter extends ReadSymptomDataFromFile {
+public class AnalyticsCounter  {
 
-
-	public AnalyticsCounter(Map<String, Integer> filepath) throws IOException {
-		super(filepath);
-		this.GetSymptoms();
+	private ISymptomWriter symptomsWriter;
+	
+	public AnalyticsCounter(ISymptomWriter writer) {
+		
+		symptomsWriter = writer;
 	}
-
-	public static void main(String[] args) throws IOException {
-		List<String> filepath = Files.readAllLines(Paths.get("symptoms.txt"));
+	
+	public void counter() throws IOException {
+		List<String> symptomList = Files.readAllLines(Paths.get("symptoms.txt"));
 		Map<String, Integer> readsymtfromfile = new TreeMap<>();
 
-		// Initialize the frequency table from the command line
-		for (String a : filepath) {
+		// Initialize the frequency table
+		for (String a : symptomList) {
 			Integer AnalyticsCounter = readsymtfromfile.get(a);
-			readsymtfromfile.put(a, (AnalyticsCounter == null) ? 1 : AnalyticsCounter + 1);
-		}
-		   /**
-			 * This argument is a conditional expression that has the effect of 
-			 * setting the
-			 * frequency to one if the word has never been seen before or to one 
-			 * more than
+
+			/**
+			 * This argument is a conditional expression that has the effect of setting the
+			 * frequency to one if the word has never been seen before or to one more than
 			 * its current value if the word has already been seen.
 			 */
-		System.out.println("We have " + readsymtfromfile.size() + " distinct symptoms listed as well :"+ " \n");
+			readsymtfromfile.put(a, (AnalyticsCounter == null) ? 1 : AnalyticsCounter + 1);
+		}
+
+		System.out.println("We have " + readsymtfromfile.size() + " distinct symptoms listed as well :" + " \n");
 
 		// Order the list, line by line on the console by comparing the keys
 		readsymtfromfile.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByKey())
-		.forEachOrdered(System.out::println);
-		
+				.forEachOrdered(System.out::println);
 
-		ReadSymptomDataFromFile symptoms  = new ReadSymptomDataFromFile(readsymtfromfile);
-		symptoms.toString();
-		
 
+		symptomsWriter.writeSymptoms(readsymtfromfile);
+		
+	}
+
+	//Read symptoms from file
+	public static void main(String[] args) throws IOException {
+
+		ISymptomWriter symptomWriter = new WriteSymptomDataToFile();
+		AnalyticsCounter analyticscounter = new AnalyticsCounter(symptomWriter);
+		
+		analyticscounter.counter();
+		
+		
+		
+		
 	}
 
 	// A SortedMap is a Map that maintains its entries in ascending order,
