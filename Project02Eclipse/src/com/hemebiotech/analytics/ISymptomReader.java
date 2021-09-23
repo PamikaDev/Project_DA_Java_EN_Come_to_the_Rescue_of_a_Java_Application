@@ -2,7 +2,6 @@ package com.hemebiotech.analytics;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Anything that will read symptom data from a source
@@ -11,7 +10,7 @@ import java.util.Map;
  */
 public interface ISymptomReader {
 	
-	Map<String, Integer> Symptoms () throws IOException;
+	//Map<String, Integer> Symptoms () throws IOException;
 	
 	/**An object that maps keys to values. 
 	 * 
@@ -29,7 +28,9 @@ public interface ISymptomReader {
 	 * guarantees as to their order; others, like the HashMapclass, 
 	 * do not.*/ 
 	
-	//List<String> GetSymptoms () throws IOException;
+	List<String> GetSymptoms () throws IOException;
+
+//	Map<String, Integer> Symptoms() throws IOException;
 	
 //	void Symptoms () throws IOException;
 }

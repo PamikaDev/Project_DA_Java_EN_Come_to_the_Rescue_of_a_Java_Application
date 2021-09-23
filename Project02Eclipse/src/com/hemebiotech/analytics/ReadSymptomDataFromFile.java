@@ -1,112 +1,86 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 
 /**
  * Simple brute force implementation
  *
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
+	
+	private static String filepath;
 
-	public String getFilepath() {
+	public static String getFilepath() {
 		return filepath;
 	}
-
-	public void setFilepath(String filepath) {
+	
+	public static void setFilepath(String filepath) {
 		ReadSymptomDataFromFile.filepath = filepath;
 	}
 
-	private static String filepath;
-
 	/**
-	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it,
+	 * @param readsymtfromfile 
+	 * @param readsymtfromfile a full or partial path to file with symptom strings in it,
 	 *                 one per line
 	 * @throws IOException
 	 */
 
-	public ReadSymptomDataFromFile() throws IOException {
+	public ReadSymptomDataFromFile(Map<String, Integer> readsymtfromfile) throws IOException {
+		
+	
+	//	try (FileWriter file = new FileWriter("results.out")) {
+		
+		TreeMap<String, Integer> analycount = new TreeMap<>();
+		
+		analycount.putAll(analycount);
 
-		try (FileWriter file = new FileWriter(filepath)) {
+		List<String> finallines = analycount.entrySet().stream().
+		map(entry -> entry.getKey() + ": " + entry.getValue()).collect(Collectors.toList());
+		Files.write(Paths.get("results.out"), finallines);}
+		
 
-			try {
-				if (filepath != null) {
 
-					try (BufferedWriter out = new BufferedWriter(new FileWriter("results.out"))) {
+				
+//		Map<String, Integer> readsymtfromfile = new TreeMap<>();
+//		try (FileWriter file = new FileWriter("results.out")) {
+//			
+//				if (file != null) {
+//					
+//					try (BufferedWriter out = new BufferedWriter(new FileWriter("results.out"))) {
+//						readsymtfromfile = new TreeMap<>();
+//
+//						for (Entry<String, Integer> analycount : readsymtfromfile.entrySet()) {
+//							
+//							System.out.println(analycount.getKey() + ": " + analycount.getValue());
+//							
+//							out.write(analycount.getKey() + " = " + analycount.getValue() + " \n");
+//						}
+//
+//					} catch (Exception FileNotFoundException) {
+//						FileNotFoundException.printStackTrace();
+//					}
+//				}
+//
+//			} catch (Exception FileNotFoundException) {
+//				FileNotFoundException.printStackTrace();
+//			}
+		
 
-						Map<String, Integer> sympt = new TreeMap<>();
-
-						for (Entry<String, Integer> analycount : sympt.entrySet()) {
-
-							System.out.println(analycount.getKey() + ": " + analycount.getValue());
-
-							out.write(analycount.getKey() + " = " + analycount.getValue() + " \n");
-						}
-
-					} catch (Exception FileNotFoundException) {
-						FileNotFoundException.printStackTrace();
-					}
-				}
-
-			} catch (Exception FileNotFoundException) {
-				FileNotFoundException.printStackTrace();
-			}
-
-		}
-	}
-
-	public Entry<String, Integer> getEntry() {
-		return getEntry();
-	}
-
-	public void setEntry(Entry<String, Integer> entry) {
-		this.setEntry(entry);
-	}
 
 	@Override
-	public Map<String, Integer> Symptoms() throws IOException {
-		return Symptoms();
+	public List<String> GetSymptoms() throws IOException {
+		return GetSymptoms();
 	}
 
-	
+
+
+
 
 }
-
-//---------------------------------------------------------------------	
-
-// public Map<String, Integer> Symptoms () throws IOException {
-//	public List<String> GetSymptoms () throws IOException{
-//	
-//		Map<String, Integer> sympt = new TreeMap<>();
-//		
-//		FileWriter writer = new FileWriter("results.out");
-//
-//		 if (filepath != null) {
-//
-//		try (BufferedWriter out = new BufferedWriter(writer)) {
-//
-//			for (Map.Entry<String, Integer> entry : sympt.entrySet()) {
-//
-//				out.write(entry.getKey() + " = " + entry.getValue() + " \n");
-//
-//				out.flush(); // Force write
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//		return entry;
-//}
-//
-//	@Override
-//	public Map<String, Integer> Symptoms() throws IOException {
-//		
-//		return Symptoms();
-//	}
-//
-//}

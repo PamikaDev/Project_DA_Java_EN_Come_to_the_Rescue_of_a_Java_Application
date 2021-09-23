@@ -5,58 +5,43 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class AnalyticsCounter extends ReadSymptomDataFromFile {
 
-	private static Entry<String, Integer> analycount;
 
-	public AnalyticsCounter(String filepath) throws IOException {
-		super();
-		this.getFilepath();
+	public AnalyticsCounter(Map<String, Integer> filepath) throws IOException {
+		super(filepath);
+		this.GetSymptoms();
 	}
 
 	public static void main(String[] args) throws IOException {
-
 		List<String> filepath = Files.readAllLines(Paths.get("symptoms.txt"));
-
 		Map<String, Integer> readsymtfromfile = new TreeMap<>();
 
 		// Initialize the frequency table from the command line
 		for (String a : filepath) {
 			Integer AnalyticsCounter = readsymtfromfile.get(a);
-
-			/**
-			 * 
+			readsymtfromfile.put(a, (AnalyticsCounter == null) ? 1 : AnalyticsCounter + 1);
+		}
+		   /**
 			 * This argument is a conditional expression that has the effect of 
 			 * setting the
 			 * frequency to one if the word has never been seen before or to one 
 			 * more than
 			 * its current value if the word has already been seen.
-			 * 
 			 */
-			readsymtfromfile.put(a, (AnalyticsCounter == null) ? 1 : AnalyticsCounter + 1);
-		}
-
 		System.out.println("We have " + readsymtfromfile.size() + " distinct symptoms listed as well :"+ " \n");
 
 		// Order the list, line by line on the console by comparing the keys
 		readsymtfromfile.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByKey())
 		.forEachOrdered(System.out::println);
 		
-		
-	
-//		ReadSymptomDataFromFile();{
-//			new ReadSymptomDataFromFile();
-//		//	System.out.println(analycount.getKey() + ": " + analycount.getValue());
-//		}
-		
-	}
 
-	@Override
-	public Map<String, Integer> Symptoms() throws IOException {
-		return Symptoms();
+		ReadSymptomDataFromFile symptoms  = new ReadSymptomDataFromFile(readsymtfromfile);
+		symptoms.toString();
+		
+
 	}
 
 	// A SortedMap is a Map that maintains its entries in ascending order,
