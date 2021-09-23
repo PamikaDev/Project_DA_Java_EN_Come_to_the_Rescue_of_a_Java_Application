@@ -30,7 +30,4 @@ public interface ISymptomReader {
 	
 	List<String> GetSymptoms () throws IOException;
 
-//	Map<String, Integer> Symptoms() throws IOException;
-	
-//	void Symptoms () throws IOException;
 }
