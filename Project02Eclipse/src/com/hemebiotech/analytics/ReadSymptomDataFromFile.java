@@ -39,7 +39,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		
 		TreeMap<String, Integer> analycount = new TreeMap<>();
 		
-		analycount.putAll(analycount);
+		analycount.putAll(readsymtfromfile);
 
 		List<String> finallines = analycount.entrySet().stream().
 		map(entry -> entry.getKey() + ": " + entry.getValue()).collect(Collectors.toList());
