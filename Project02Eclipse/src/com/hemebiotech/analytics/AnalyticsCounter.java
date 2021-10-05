@@ -11,25 +11,47 @@ import java.io.IOException;
  */
 public class AnalyticsCounter {
 
-	private static String file = "symptoms.txt";
-	private static String resultOut = "results.out";
 
-	private static ISymptomReader rsdf = new ReadSymptomDataFromFile(file);
-	private static ISymptomWriter wsdf = new WriteSymptomDataToFile(resultOut);
+	private static ISymptomReader rsdf =  new ReadSymptomDataFromFile(ReadSymptomDataFromFile.getFile());
+	
+	private static ISymptomWriter wsdf = new WriteSymptomDataToFile(WriteSymptomDataToFile.getResultOut());
+	
 
-	public static String getResultOut() {
-		return resultOut;
+	public static ISymptomReader getRsdf() {
+		return rsdf;
 	}
-	public static String getFile() {
-		return file;
+	public static void setRsdf(ISymptomReader rsdf) {
+		AnalyticsCounter.rsdf = rsdf;
+	}
+	
+	public static ISymptomWriter getWsdf() {
+		return wsdf;
+	}
+	public static void setWsdf(ISymptomWriter wsdf) {
+		AnalyticsCounter.wsdf = wsdf;
+	}
+	
+	public static void getResultOut() {
+		return;	
+	}
+	
+	public static void getFile() {
+		return;	
 	}
 
+	
+	
 	/**
 	 * Process -> file > getSymptoms > countAndSort > writeSymptoms > resultOut
 	 * @param args
 	 */
 	public static void main(String args[]) throws IOException {
+		
 	
 		wsdf.writeSymptoms(wsdf.countAndSort(rsdf.getSymptoms()));
+		
+		
 	}
+	
+	
 }

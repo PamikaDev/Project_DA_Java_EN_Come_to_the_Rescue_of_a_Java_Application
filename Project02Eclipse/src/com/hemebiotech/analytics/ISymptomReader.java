@@ -16,8 +16,8 @@ public interface ISymptomReader {
 	/**
 	 * If no data is available, return an empty List
 	 * 
-	 * @return a raw listing of all symptoms obtained from a data source,
-	 *         duplicates are possible/probable
+	 * @return a raw listing of all symptoms obtained from a data source, duplicates
+	 *         are possible/probable
 	 */
 	List<String> getSymptoms() throws IOException;
 

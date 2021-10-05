@@ -11,19 +11,31 @@ import java.util.List;
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
+	
 	/**
 	 * @param file a full or partial path to file with symptoms strings in it,one
 	 *             per line
 	 */
+	private static String file = "symptoms.txt";
+	
+	public static String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		ReadSymptomDataFromFile.file = file;
+	}
+	
 	public ReadSymptomDataFromFile(String file) {
 		AnalyticsCounter.getFile();
 	}
 
 	/**
-	 * Count the symptoms read from a file and put in a Arraylist type container
+	 * Read symptom from a file and put in a Arraylist type container
 	 */
 	@Override
 	public List<String> getSymptoms() throws IOException {
+		
 
 		/**
 		 * Read a list of symptom and return it
@@ -31,14 +43,21 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		 * @return a arrayList with symptom
 		 */
 		List<String> symptoms = new ArrayList<String>();
-		if (AnalyticsCounter.getFile() != null) {
+		
+		
+		if (file != null) {
+			
 			try {
 				// first get input
-				BufferedReader reader = new BufferedReader(new FileReader(AnalyticsCounter.getFile()));
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+				
 				String line = reader.readLine();
 
 				while (line != null) {
+					
+					//Capitalize the first letter of symptoms
 					symptoms.add(line.substring(0, 1).toUpperCase() + line.substring(1, line.length()));
+					
 					line = reader.readLine(); // get another symptoms
 				}
 				// close resources
