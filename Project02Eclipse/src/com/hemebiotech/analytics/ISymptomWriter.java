@@ -6,14 +6,15 @@ import java.util.Map;
 public interface ISymptomWriter {
 
 	/**
+	 * 
 	 * Counts and sorts the data
 	 * 
 	 * @param symptomList -> Contains each line read
 	 * @return a list of symptoms after counting and sorting.
-	 *
 	 */
 	Map<String, Integer> countAndSort(List<String> symptomList);
 
+	
 	/**
 	 * 
 	 * @param symptomListOut: Object type Map<String, Integer>.
@@ -21,5 +22,4 @@ public interface ISymptomWriter {
 	 * Transcribe a map in a file
 	 */
 	void writeSymptoms(Map<String, Integer> symptomListOut);
-
 }

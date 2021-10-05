@@ -20,5 +20,4 @@ public interface ISymptomReader {
 	 *         are possible/probable
 	 */
 	List<String> getSymptoms() throws IOException;
-
 }

@@ -7,47 +7,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 
  * Simple brute force implementation
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
-
 	
 	/**
-	 * @param file a full or partial path to file with symptoms strings in it,one
-	 *             per line
+	 * 
+	 * @param file a full or partial path to file with symptoms strings in it,one per line
+	 * 
 	 */
 	private static String file = "symptoms.txt";
 	
 	public static String getFile() {
 		return file;
 	}
-
+	
 	public void setFile(String file) {
-		ReadSymptomDataFromFile.file = file;
+		setFile(file);
 	}
 	
 	public ReadSymptomDataFromFile(String file) {
-		AnalyticsCounter.getFile();
+		ReadSymptomDataFromFile.file = file;
 	}
 
 	/**
+	 * 
 	 * Read symptom from a file and put in a Arraylist type container
 	 */
 	@Override
 	public List<String> getSymptoms() throws IOException {
-		
 
 		/**
+		 * 
 		 * Read a list of symptom and return it
 		 * 
 		 * @return a arrayList with symptom
 		 */
 		List<String> symptoms = new ArrayList<String>();
 		
-		
 		if (file != null) {
 			
 			try {
+				
 				// first get input
 				BufferedReader reader = new BufferedReader(new FileReader(file));
 				
@@ -60,6 +62,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 					
 					line = reader.readLine(); // get another symptoms
 				}
+				
 				// close resources
 				reader.close();
 
