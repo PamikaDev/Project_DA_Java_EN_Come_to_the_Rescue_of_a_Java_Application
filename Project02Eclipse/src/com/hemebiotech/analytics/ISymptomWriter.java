@@ -14,12 +14,11 @@ public interface ISymptomWriter {
 	 */
 	Map<String, Integer> countAndSort(List<String> symptomList);
 
-	
 	/**
 	 * 
 	 * @param symptomListOut: Object type Map<String, Integer>.
-	 * @return a list of symptoms and its number of occurrences. 
-	 * Transcribe a map in a file
+	 * @return a list of symptoms and its number of occurrences. Transcribe a map in
+	 *         a file
 	 */
 	void writeSymptoms(Map<String, Integer> symptomListOut);
 }
