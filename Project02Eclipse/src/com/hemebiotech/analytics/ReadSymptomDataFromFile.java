@@ -14,58 +14,51 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	/**
 	 * 
-	 * @param file a full or partial path to file with symptoms strings in it,one
+	 * @param source a full or partial path to source with symptoms strings in it,one
 	 *             per line
 	 * 
 	 */
-	private static String file = "symptoms.txt";
+	private String source = "symptoms.txt";
 
-	public static String getFile() {
-		return file;
+	public String getSource() {
+		return source;
 	}
 
-	public void setFile(String file) {
-		setFile(file);
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public ReadSymptomDataFromFile(String source) {
+		this.source = source;
 	}
 
 	public ReadSymptomDataFromFile() {
-		super();
 	}
 
 	/**
 	 * 
-	 * Read symptom from a file and put in a Arraylist type container
+	 * Read symptom from a source and put in a Arraylist type container
 	 */
 	@Override
-	public List<String> getSymptoms() throws IOException {
+	public List<String> getSymptoms() {
 
 		List<String> symptomList = new ArrayList<String>();
 
-		if (file != null) {
-
+		if (source != null) {
 			try {
+				String line ;
+				BufferedReader reader = new BufferedReader(new FileReader(source));
 
-				// first get input
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-
-				String line = reader.readLine();
-
-				while (line != null) {
-
+				while ((line = reader.readLine()) != null) {
 					// Capitalize the first letter of symptoms
 					symptomList.add(line.substring(0, 1).toUpperCase() + line.substring(1, line.length()));
-
-					line = reader.readLine(); // get another symptoms
 				}
-
 				// close resources
 				reader.close();
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
 		return symptomList;
 	}
 }

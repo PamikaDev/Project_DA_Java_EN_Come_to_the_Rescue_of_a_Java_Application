@@ -10,18 +10,17 @@ import java.util.TreeMap;
 
 public class WriteSymptomDataToFile implements ISymptomWriter {
 
-	private static String resultOut = "results.out";
+	private   String resultOut = "results.out";
 
-	public static String getResultOut() {
+	public  String getResultOut() {
 		return resultOut;
 	}
 
-	public static void setResultOut(String resultOut) {
-		setResultOut(resultOut);
+	public void setResultOut(String resultOut) {
+		this.resultOut = resultOut;
 	}
 
 	public WriteSymptomDataToFile() {
-		super();
 	}
 
 	/**
@@ -33,13 +32,11 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 	 */
 	@Override
 	public Map<String, Integer> countAndSort(List<String> symptomList) {
-
 		Map<String, Integer> symptomListSort = new TreeMap<>();
 
 		// We check if the symptom exists in the file and we count its number of
 		// occurrences
 		for (String symptom : symptomList) {
-
 			symptomListSort.put(symptom, symptomListSort.getOrDefault(symptom, 0) + 1);
 		}
 
@@ -58,27 +55,21 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 	public void writeSymptoms(Map<String, Integer> symptomListOut) {
 
 		try {
-			
 			BufferedWriter writer = new BufferedWriter(new FileWriter(resultOut));
 
 			writer.write("List of symptoms with their occurences: " + " \n");
 			writer.write("#######################################" + "\n");
-
 			writer.write("We have " + symptomListOut.size() + " distinct(s) symptoms listed as well: " + " \n");
-			writer.write("###############################################" + "\n\n");
+			writer.write("-----------------------------------------------" + "\n");
 
 			for (Entry<String, Integer> symptoms : symptomListOut.entrySet()) {
-
 				// File.out
 				writer.write(symptoms.getKey() + " = " + symptoms.getValue() + " \n");
-
 				writer.flush(); // Force write
 			}
 
 			writer.close();
-
 		} catch (IOException e) {
-
 			System.out.println("Unable to write file: " + e.getMessage());
 		}
 	}

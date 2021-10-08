@@ -12,21 +12,28 @@ import java.io.IOException;
  */
 public class AnalyticsCounter {
 
-	private static ISymptomReader rsdf = new ReadSymptomDataFromFile();
+	private ISymptomReader rsdf;
 
-	private static ISymptomWriter wsdf = new WriteSymptomDataToFile();
-
+	private ISymptomWriter wsdf;
+	
+	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
+		this.rsdf = reader;
+		this.wsdf = writer;	
+	}
+	
+	//Process -> file > getSymptoms > countAndSort > writeSymptoms > resultOut
+	public void analytics () {
+		this.wsdf.writeSymptoms(this.wsdf.countAndSort(this.rsdf.getSymptoms()));
+	}
+	
 	/**
-	 * 
-	 * Process -> file > getSymptoms > countAndSort > writeSymptoms > resultOut
-	 * 
 	 * @param args
 	 * 
 	 * @throws IOException Invalid Argument IOException describe when this exception
 	 *                     is thrown by the method.
 	 */
 	public static void main(String args[]) throws IOException {
-
-		wsdf.writeSymptoms(wsdf.countAndSort(rsdf.getSymptoms()));
+		AnalyticsCounter analyticsCounter = new AnalyticsCounter(new ReadSymptomDataFromFile(), new WriteSymptomDataToFile());
+		analyticsCounter.analytics();
 	}
 }
