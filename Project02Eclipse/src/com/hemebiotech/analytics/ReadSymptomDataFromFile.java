@@ -24,7 +24,10 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		return source;
 	}
 
-	public void setSource(String source) {
+	public void setSource(String source) throws IOException{
+		if (source == null) {
+			throw new IOException(source);
+		}
 		this.source = source;
 	}
 
