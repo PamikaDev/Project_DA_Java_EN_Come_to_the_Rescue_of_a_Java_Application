@@ -7,41 +7,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 
  * Simple brute force implementation
- *
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
-	private String filepath;
-	
 	/**
 	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it, one per line
+	 * @param source a full or partial path to source with symptoms strings in it,one
+	 *             per line
+	 * 
 	 */
-	public ReadSymptomDataFromFile (String filepath) {
-		this.filepath = filepath;
+	private String source = "symptoms.txt";
+
+	public String getSource() {
+		return source;
 	}
-	
+
+	public void setSource(String source) throws IOException{
+		if (source == null) {
+			throw new IOException(source);
+		}
+		this.source = source;
+	}
+
+	public ReadSymptomDataFromFile(String source) {
+		this.source = source;
+	}
+
+	public ReadSymptomDataFromFile() {
+	}
+
+	/**
+	 * 
+	 * Read symptom from a source and put in a Arraylist type container
+	 */
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
-		
-		if (filepath != null) {
+	public List<String> getSymptoms() {
+
+		List<String> symptomList = new ArrayList<String>();
+
+		if (source != null) {
 			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
-				String line = reader.readLine();
-				
-				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
+				String line ;
+				BufferedReader reader = new BufferedReader(new FileReader(source));
+
+				while ((line = reader.readLine()) != null) {
+					// Capitalize the first letter of symptoms
+					symptomList.add(line.substring(0, 1).toUpperCase() + line.substring(1, line.length()));
 				}
+				// close resources
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		return result;
+		return symptomList;
 	}
-
 }
