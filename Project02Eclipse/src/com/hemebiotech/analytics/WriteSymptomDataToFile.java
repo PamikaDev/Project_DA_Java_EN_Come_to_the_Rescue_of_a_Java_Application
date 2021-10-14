@@ -3,6 +3,9 @@ package com.hemebiotech.analytics;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,56 +15,54 @@ import java.util.Map.Entry;
  * 
  */
 public class WriteSymptomDataToFile implements ISymptomWriter {
-
 	private String resultOut = "results.out";
-
-	public String getResultOut() {
-		return resultOut;
+	private Instant startedAt;
+	private Instant endedAt;
+	@BeforeAll
+	public void initStartingTime() {
+		startedAt = Instant.now();
 	}
-
-	public void setResultOut(String resultOut) throws IOException {
-		if (resultOut == null) {
-			throw new IOException(resultOut);
-			
-		}
-		this.resultOut = resultOut;
+	@AfterAll
+	public void showTestDuration() {
+		endedAt = Instant.now();
+		long duration = Duration.between(startedAt, endedAt).toMillis();
+		System.out.println(MessageFormat.format("Durée d'exécution WriteSymptomDataToFile: {0} ms :", duration));
 	}
-
-	public WriteSymptomDataToFile(String resultOut) {
-		super();
-		this.resultOut = resultOut;
-	}
-
+	//Constructor
 	public WriteSymptomDataToFile() {
+		initStartingTime();
+		showTestDuration();
 	}
-
 	/**
-	 * Method - writeSymptoms () - which takes a Map as parameter, and write the
-	 * values and keys of its elements, in the file
-	 * 
-	 * @param: symptomListOut
-	 * @param: result         resultOut
+	 * @param: symptomOccurence       
 	 * 
 	 */
 	@Override
-	public void writeSymptoms(Map<String, Integer> symptomListOut) {
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(resultOut));
-
+	// Method - writeSymptoms () - which takes a Map as parameter, and write the values and keys of its elements, in the file.
+	public void writeSymptoms(Map<String, Integer> symptomOccurence) {
+		//Console
+		System.out.println("List of symptoms with their occurences: ");
+		System.out.println("#######################################");
+		System.out.println("We have " + symptomOccurence.size() + " distinct(s) symptoms listed as well: " );
+		System.out.println("-----------------------------------------------");
+		//Try with ressources
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(resultOut) )) {
+			//File out
 			writer.write("List of symptoms with their occurences: " + " \n");
 			writer.write("#######################################" + "\n");
-			writer.write("We have " + symptomListOut.size() + " distinct(s) symptoms listed as well: " + " \n");
+			writer.write("We have " + symptomOccurence.size() + " distinct(s) symptoms listed as well: " + " \n");
 			writer.write("-----------------------------------------------" + "\n");
-
-			for (Entry<String, Integer> symptoms : symptomListOut.entrySet()) {
+			//Iteration
+			for (Entry<String, Integer> symptoms : symptomOccurence.entrySet()) {
+				//Output in console
+				System.out.print(symptoms.getKey() + " = " + symptoms.getValue()+ " \n");
 				// File.out
 				writer.write(symptoms.getKey() + " = " + symptoms.getValue() + " \n");
-				writer.flush(); // Force write
+				// Force write
+				writer.flush(); 
 			}
-
-			writer.close();
 		} catch (IOException e) {
 			System.out.println("Unable to write file: " + e.getMessage());
-		}
+		}	
 	}
 }

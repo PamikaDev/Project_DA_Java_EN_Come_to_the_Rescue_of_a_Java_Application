@@ -17,6 +17,7 @@ public interface ISymptomReader {
 	 * 
 	 * @return a raw listing of all symptoms obtained from a data source, duplicates
 	 *         are possible/probable
+	 * 
 	 */
 	List<String> getSymptoms();
 }
